@@ -1,0 +1,26 @@
+.navbar {
+    background-color: #5DBB63;
+}
+
+#sidebar {
+    background-color: #45ADA8;
+    height: 100vh;
+    /* width: calc(100% - 100px); */
+    width: 100px;
+
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #FF7F50;
+    /* Set the text color to white for active and hover states */
+}
+
+.nav-link.active {
+    background-color: red;
+    /* Set the background color to red for active state */
+}

@@ -31,7 +31,7 @@ def register():
 
 # User route
 @app.route('/user/<name>')
-def user(name):
+def profile(name):
     return render_template('user.html', name=name)
 
 # Home route
