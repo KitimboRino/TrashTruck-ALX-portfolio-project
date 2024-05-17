@@ -25,7 +25,7 @@ Before you begin, ensure you have the following installed:
 2. **Create a Virtual Environment**:
    It's good practice to create a virtual environment to manage your dependencies.
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    ```
 
