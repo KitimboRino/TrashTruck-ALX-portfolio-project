@@ -93,3 +93,5 @@ You have successfully set up and run a minimal Flask application. This basic set
 
 ---
 AUTHOR: Rino Kitimbo
+AUTHOR: Peter Lubega
+AUTHOR: ANdrew Ssentongo
