@@ -19,7 +19,7 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 # Home route
-@app.route('/')
+@app.route('/dashboard')
 def index():
     return render_template('index.html')
 
@@ -77,7 +77,7 @@ def profile(name):
     return render_template('user.html', name=name)
 
 # Home route
-@app.route('/home')
+@app.route('/')
 def home():
     return render_template('home.html', title='Home')
 
