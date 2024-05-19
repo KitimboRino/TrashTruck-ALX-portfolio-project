@@ -9,19 +9,26 @@
 </head>
 
 <body>
-    <div class="form-container">
-        <h2>Login</h2>
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label for="username">email</label>
-                <input type="text" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
+    <div class="container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Descriptive Alt Text">
+        </div>
+        <div class="form-container">
+            <h1>TrashTruck</h1>
+            <h2>Login</h2>
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Have no account? <a href="/register">Register here</a></p>
+        </div>
     </div>
 </body>
 
