@@ -177,6 +177,7 @@ def edit_user(id):
     
 @app.route('/clients')
 def clients():
+    # TODO: Implement the sessions for admins only
     if 'role' not in session or session['role'] != 'user':
         flash('Access denied!', 'danger')
         return redirect(url_for('login'))
