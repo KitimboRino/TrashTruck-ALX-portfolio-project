@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
-{% block title %} User Profile {% endblock %}
-
+{% block title %}User Profile{% endblock %}
 
 {% block page_content %}
-	<div class="page-header">
-    		<h1>Hello, {{name }}!</h1>
-    		<p>Email: {{ user.email }}</p>
-	</div>
-	<form method="POST">
-		<div>
-			<label for="address">Address</label>
-			<input type="text" name="address" value="{{ user.get('address', '') }}">
-		</div>
-		<div>
-                        <label for="phone">Phone</label> 
-			<input type="text" name="phone" value="{{ user.get('phone', '') }}">
-                </div>
-		<div>
-			<button type="submit">Save</button>
-		</div>
-	</form>
+<div class="page-header">
+    <h1>Hey, {{ user.firstname }} {{ user.lastname }}!</h1>
+    <p>Email: {{ user.email }}</p>
+</div>
+<form method="POST">
+    <div>
+        <label for="address">Address</label>
+        <input type="text" name="address" value="{{ user.address }}">
+    </div>
+    <div>
+        <label for="phone">Phone</label>
+        <input type="text" name="phone" value="{{ user.phone }}">
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
 {% endblock %}

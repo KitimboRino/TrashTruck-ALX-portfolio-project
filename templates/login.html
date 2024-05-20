@@ -5,31 +5,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 </head>
 
 <body>
     <div class="container">
-        <div class="image-container">
-            <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Descriptive Alt Text">
-        </div>
-        <div class="form-container">
-            <h1><a href="/">TrashTruck</a></h1>
-            <h2>Login</h2>
-            <form action="/login" method="post">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Descriptive Alt Text">
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <p>Have no account? <a href="/register">Register here</a></p>
+            </div>
+            <div class="col-md-6">
+                <h1><a href="/">TrashTruck</a></h1>
+                <h2>Login</h2>
+
+                <!-- Flash Messages Section -->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                    <li class="flash-message">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+                <!-- End of Flash Messages Section -->
+
+                <!-- Form with custom JavaScript for flash message fading -->
+                <form id="loginForm" action="/login" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <p>Have no account? <a href="{{ url_for('register') }}">Register here</a></p>
+            </div>
         </div>
     </div>
+
+    <!-- JavaScript code for fading out flash messages after a delay -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashMessages = document.querySelectorAll('.flash-messages .flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.classList.add('fade');
+                }, 3000); // Adjust the delay (in milliseconds) as needed
+            });
+        });
+    </script>
 </body>
 
 </html>
