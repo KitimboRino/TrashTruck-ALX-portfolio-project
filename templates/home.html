@@ -1,8 +1,4 @@
-{% extends 'base.html' %}
 
-{% block content %}
-{% block page_content %}
 <h2>Welcome to the Home Page</h2>
 <p>This is the home page of the dashboard.</p>
-{% endblock %}
-{% endblock %}
+<a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a>
