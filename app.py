@@ -160,7 +160,7 @@ def edit_user(id):
         lastname = request.form['editLastname']
         pickupdate = request.form['editPickupdate']
         wastetype = request.form['editWastetype']
-        crew = request.form['editCrew']
+        crew_id = request.form['editCrew']
         phone = request.form['editPhone']
         location = request.form['editLocation']
         subscription = request.form['editSubscription']
@@ -173,7 +173,7 @@ def edit_user(id):
         user.lastname = lastname
         user.pickupdate = pickupdate
         user.wastetype = wastetype
-        user.crew = crew
+        user.crew_id = crew_id
         user.phone = phone
         user.location = location
         user.subscription = subscription

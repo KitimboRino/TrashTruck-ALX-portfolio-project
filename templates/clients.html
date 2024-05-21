@@ -19,6 +19,10 @@
         white-space: nowrap;
         /* Prevent line breaks */
     }
+
+    h4 {
+        color: aliceblue;
+    }
 </style>
 <div class="container mt-4">
     <h3>Hey Admin, here are your Clients</h3>
@@ -45,10 +49,22 @@
                 <td>{{ user.location }}</td>
                 <td>{{ user.pickupdate }}</td>
                 <td>{{ user.wastetype }}</td>
-                <td>{{ user.crew }}</td>
+                <td>{{ user.crew.name if user.crew else 'None allocated yet' }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
-                <td>{{ user.subscription }}</td>
+                <td>
+                    <h4>
+                        {% if user.subscription == 'active' %}
+                        <span class="badge rounded-pill bg-success">{{ user.subscription }}</span>
+                        {% elif user.subscription == 'expired' %}
+                        <span class="badge rounded-pill bg-danger">{{ user.subscription }}</span>
+                        {% elif user.subscription == 'cancelled' %}
+                        <span class="badge rounded-pill bg-secondary">{{ user.subscription }}</span>
+                        {% else %}
+                        <span class="badge rounded-pill bg-warning">{{ user.subscription }}</span>
+                        {% endif %}
+                    </h4>
+                </td>
                 <td>
                     <!-- Edit button -->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -112,8 +128,8 @@
                                             <label for="editCrew">Crew</label>
                                             <select class="form-control" id="editCrew" name="editCrew">
                                                 {% for crew in crews %}
-                                                <option value="{{ crew.name }}" {% if user.crew==crew.name %} selected
-                                                    {% endif %}>{{ crew.name }}</option>
+                                                <option value="{{ crew.id }}" {% if user.crew_id==crew.id %} selected {%
+                                                    endif %}>{{ crew.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -137,8 +153,8 @@
                                             </select> -->
                                             <select class="form-control" id="editLocation" name="editLocation">
                                                 {% for crew in crews %}
-                                                <option value="{{ crew.location }}" {% if user.crew==crew.location %} selected
-                                                    {% endif %}>{{ crew.location }}</option>
+                                                <option value="{{ crew.location }}" {% if user.crew==crew.location %}
+                                                    selected {% endif %}>{{ crew.location }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
