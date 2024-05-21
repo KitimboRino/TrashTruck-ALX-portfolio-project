@@ -13,8 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
-# User model
-# User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(150), nullable=False)
@@ -24,14 +22,15 @@ class User(db.Model):
     address = db.Column(db.String(250))
     phone = db.Column(db.String(50))
     role = db.Column(db.String(20), nullable=False, default='user')
-    pickupdate = db.Column(db.String(50))  # Assuming pickupdate is a String field
+    pickupdate = db.Column(db.String(50))
     wastetype = db.Column(db.String(100))
-    crew = db.Column(db.String(100))
+    crew_id = db.Column(db.Integer, db.ForeignKey('crew.id'), nullable=True)  # Foreign key reference
     location = db.Column(db.String(250))
-    subscription = db.Column(db.String(50))  # Assuming subscription is a String field
+    subscription = db.Column(db.String(50))
 
-    # Constructor
-    def __init__(self, firstname, lastname, email, password, address=None, phone=None, role='user', pickupdate=None, wastetype=None, crew=None, location=None, subscription=None):
+    crew = db.relationship('Crew', back_populates='members')
+
+    def __init__(self, firstname, lastname, email, password, address=None, phone=None, role='user', pickupdate=None, wastetype=None, crew_id=None, location=None, subscription=None):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -41,16 +40,29 @@ class User(db.Model):
         self.role = role
         self.pickupdate = pickupdate
         self.wastetype = wastetype
-        self.crew = crew
+        self.crew_id = crew_id
         self.location = location
         self.subscription = subscription
 
-    # Methods to set and check password hashes
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+# Crew model
+class Crew(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    pickupdate = db.Column(db.String(50), nullable=False)
+    location = db.Column(db.String(250), nullable=False)
+
+    members = db.relationship('User', back_populates='crew', cascade='all, delete-orphan')
+
+    def __init__(self, name, pickupdate, location):
+        self.name = name
+        self.pickupdate = pickupdate
+        self.location = location
 
 # Create the database tables
 with app.app_context():
@@ -174,7 +186,9 @@ def edit_user(id):
         
         # Redirect to the clients page
         return redirect(url_for('clients'))
-    
+
+
+# Clients route
 @app.route('/clients')
 def clients():
     # TODO: Implement the sessions for admins only
@@ -184,17 +198,69 @@ def clients():
     
     # Fetch all users from the database
     users = User.query.all()
+    crews = Crew.query.all()
     
-    return render_template('clients.html', title='Clients', users=users)
+    return render_template('clients.html', title='Clients', users=users, crews=crews)
 
 
 # Crews route
 @app.route('/crews')
 def crews():
-    if 'role' not in session or session['role'] != 'superadmin':
+    if 'role' not in session or session['role'] != 'user':
         flash('Access denied!', 'danger')
         return redirect(url_for('login'))
-    return render_template('crews.html', title='Crews')
+    
+    crews = Crew.query.all()
+    
+    return render_template('crews.html', title='Crews', crews=crews)
+
+
+# Add Crew route
+@app.route('/add_crew', methods=['POST'])
+def add_crew():
+    if request.method == 'POST':
+        name = request.form['name']
+        pickupdate = request.form['pickupdate']
+        location = request.form['location']
+        
+        new_crew = Crew(name=name, pickupdate=pickupdate, location=location)
+        db.session.add(new_crew)
+        db.session.commit()
+        
+        flash('Crew added successfully!', 'success')
+        
+        return redirect(url_for('crews'))
+
+
+# Edit Crew route
+@app.route('/edit_crew/<int:id>', methods=['POST'])
+def edit_crew(id):
+    if request.method == 'POST':
+        crew = Crew.query.get(id)
+        crew.name = request.form['editName']
+        crew.pickupdate = request.form['editPickupdate']
+        crew.location = request.form['editLocation']
+        
+        db.session.commit()
+        
+        flash('Crew information updated successfully!', 'success')
+        
+        return redirect(url_for('crews'))
+
+    
+# Delete Crew route
+@app.route('/delete_crew/<int:id>', methods=['POST'])
+def delete_crew(id):
+    if request.method == 'POST':
+        crew = Crew.query.get(id)
+        if crew:
+            db.session.delete(crew)
+            db.session.commit()
+            flash('Crew deleted successfully!', 'success')
+        else:
+            flash('Crew not found!', 'danger')
+    return redirect(url_for('crews'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
