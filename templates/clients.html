@@ -1,14 +1,31 @@
 {% extends 'base.html' %}
 
 {% block page_content %}
+
+<!-- Flash Messages Section -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages">
+    {% for message in messages %}
+    <li class="flash-message">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<!-- End of Flash Messages Section -->
+
 <style>
     .table th {
         white-space: nowrap;
         /* Prevent line breaks */
     }
+
+    h4 {
+        color: aliceblue;
+    }
 </style>
-<div class="container">
-    <h1>Clients</h1>
+<div class="container mt-4">
+    <h3>Hey Admin, here are your Clients</h3>
     <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
@@ -32,10 +49,22 @@
                 <td>{{ user.location }}</td>
                 <td>{{ user.pickupdate }}</td>
                 <td>{{ user.wastetype }}</td>
-                <td>{{ user.crew }}</td>
+                <td>{{ user.crew.name if user.crew else 'None allocated yet' }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
-                <td>{{ user.subscription }}</td>
+                <td>
+                    <h4>
+                        {% if user.subscription == 'active' %}
+                        <span class="badge rounded-pill bg-success">{{ user.subscription }}</span>
+                        {% elif user.subscription == 'expired' %}
+                        <span class="badge rounded-pill bg-danger">{{ user.subscription }}</span>
+                        {% elif user.subscription == 'cancelled' %}
+                        <span class="badge rounded-pill bg-secondary">{{ user.subscription }}</span>
+                        {% else %}
+                        <span class="badge rounded-pill bg-warning">{{ user.subscription }}</span>
+                        {% endif %}
+                    </h4>
+                </td>
                 <td>
                     <!-- Edit button -->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -69,11 +98,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="editPickupdate">Pickup Date</label>
-                                            <select class="form-control" id="editPickupdate" name="editPickupdate">
+                                            <!-- <select class="form-control" id="editPickupdate" name="editPickupdate">
                                                 <option value="Tuesday" {% if user.pickupdate=='Tuesday' %} selected {%
                                                     endif %}>Tuesday</option>
                                                 <option value="Thursday" {% if user.pickupdate=='Thursday' %} selected
                                                     {% endif %}>Thursday</option>
+                                            </select> -->
+                                            <select class="form-control" id="editPickupdate" name="editPickupdate">
+                                                {% for crew in crews %}
+                                                <option value="{{ crew.pickupdate }}" {% if user.crew==crew.pickupdate
+                                                    %} selected {% endif %}>{{ crew.pickupdate }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -92,10 +127,10 @@
                                         <div class="form-group">
                                             <label for="editCrew">Crew</label>
                                             <select class="form-control" id="editCrew" name="editCrew">
-                                                <option value="Crew 1" {% if user.crew=='Crew 1' %} selected {% endif
-                                                    %}>Crew 1</option>
-                                                <option value="Crew 2" {% if user.crew=='Crew 2' %} selected {% endif
-                                                    %}>Crew 2</option>
+                                                {% for crew in crews %}
+                                                <option value="{{ crew.id }}" {% if user.crew_id==crew.id %} selected {%
+                                                    endif %}>{{ crew.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <!-- <div class="form-group">
@@ -110,11 +145,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="editLocation">Location</label>
-                                            <select class="form-control" id="editLocation" name="editLocation">
+                                            <!-- <select class="form-control" id="editLocation" name="editLocation">
                                                 <option value="Kira" {% if user.location=='Kira' %} selected {% endif
                                                     %}>Kira</option>
                                                 <option value="Bukoto" {% if user.location=='Bukoto' %} selected {%
                                                     endif %}>Bukoto</option>
+                                            </select> -->
+                                            <select class="form-control" id="editLocation" name="editLocation">
+                                                {% for crew in crews %}
+                                                <option value="{{ crew.location }}" {% if user.crew==crew.location %}
+                                                    selected {% endif %}>{{ crew.location }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -141,4 +182,15 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var flashMessages = document.querySelectorAll('.flash-messages .flash-message');
+        flashMessages.forEach(function (message) {
+            setTimeout(function () {
+                message.classList.add('fade');
+            }, 3000); // Adjust the delay (in milliseconds) as needed
+        });
+    });
+</script>
 {% endblock %}

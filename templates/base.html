@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/dashLayout.css') }}" rel="stylesheet">
 </head>
@@ -22,7 +23,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <!-- Example avatar -->
-                    <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="Avatar" class="avatar-img">
+                    <img src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="Avatar" class="avatar-img">
                 </li>
                 <li class="nav-item">
                     <!-- Add logout button -->
@@ -36,23 +37,23 @@
     
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebar" class="col-md-1 col-lg-2 d-md-block sidebar collapse">
+            <nav id="sidebar" class="col-md-2 d-md-block sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="/home">
+                            <a class="nav-link {% if request.path == '/home' %}active{% endif %}" href="/profile">
                                 <span data-feather="home"></span>
-                                Home <span class="sr-only"></span>
+                                Account <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/clients">
+                            <a class="nav-link {% if request.path == '/clients' %}active{% endif %}" href="/clients">
                                 <span data-feather="file"></span>
                                 Clients
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/crews">
+                            <a class="nav-link {% if request.path == '/crews' %}active{% endif %}" href="/crews">
                                 <span data-feather="shopping-cart"></span>
                                 Crews
                             </a>
@@ -61,7 +62,7 @@
                 </div>
             </nav>
 
-            <main role="main" class="col-md-11 ml-sm-auto col-lg-10 px-4">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 {% block content %}
                 {% block page_content %}
                 {% endblock %}
