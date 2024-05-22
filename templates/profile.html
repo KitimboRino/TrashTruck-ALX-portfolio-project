@@ -1,22 +1,165 @@
 {% extends 'base.html' %}
-{% block title %}User Profile{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Hey, {{ user.firstname }} {{ user.lastname }}!</h1>
-    <p>Email: {{ user.email }}</p>
+
+<!-- Flash Messages Section -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages">
+    {% for message in messages %}
+    <div class="alert alert-success flash-message" role="alert">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<!-- End of Flash Messages Section -->
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{user.firstname}} {{user.lastname}}'s Profile Information</h2>
+
+            <!-- <ul class="list-group"> -->
+            <li class="list-group-item">Service Address: {{user.location}}</li>
+            <li class="list-group-item">Service Crew: {{ user.crew.name if user.crew else 'None allocated yet' }}</li>
+            <li class="list-group-item">Pickupdate: {{ user.pickupdate if user.pickupdate else 'None allocated yet' }}</li>
+            <li class="list-group-item">Wastetype: {{ user.wastetype if user.wastetype else 'None allocated yet' }}</li>
+            <h5 class="mt-4">Contact Information</h5>
+            <ul class="list-group">
+                <li class="list-group-item">Email: {{user.email}}</li>
+                <li class="list-group-item">Phone: {{user.phone}}</li>
+            </ul>
+            <!-- </ul> -->
+        </div>
+        <div class="col-md-6">
+            <!-- Edit button -->
+            <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#editProfileModal">
+                Edit your Profile
+            </button>
+        </div>
+
+        <div class="mt-4">
+            <h2>Waste Sorting Guidelines</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/blue.jpeg') }}"" class=" card-img-top"
+                            alt="Recycling Bin">
+                        <div class="card-body">
+                            <h5 class="card-title">Recycling Bin (Blue Bin)</h5>
+                            <p class="card-text">Clean plastic bottles and containers (rinsed), paper products
+                                (newspaper,
+                                cardboard), aluminum cans. Check the bottom of the container for the recycling symbol!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/black.jpeg') }}"" class=" card-img-top"
+                            alt="Garbage Bin">
+                        <div class="card-body">
+                            <h5 class="card-title">Garbage Bin (Black Bin)</h5>
+                            <p class="card-text">Food scraps (except for compostable items), dirty tissues and paper
+                                towels,
+                                plastic wrap and film. Not sure where it goes? Check with us!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ url_for('static', filename='images/green.jpeg') }}"" class=" card-img-top"
+                            alt="Compost Bin">
+                        <div class="card-body">
+                            <h5 class="card-title">Compost Bin (Green Bin)</h5>
+                            <p class="card-text">Fruit and vegetable scraps, eggshells and coffee grounds, tea bags and
+                                yard
+                                trimmings (optional). Composting helps reduce waste and create nutrient-rich soil!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="mt-3">
+            <h3 class="mt-1">Waste Reduction Tips</h3>
+            <h4>Reduce, Reuse, Recycle!</h4>
+            <ul>
+                <li>Shop smart: Choose products with minimal packaging.</li>
+                <li>Embrace reusables: Use reusable bags, water bottles, and coffee mugs.</li>
+                <li>Compost food scraps: Turn kitchen waste into nutrient-rich compost for your garden (link to a
+                    composting
+                    guide).</li>
+                <li>Buy in bulk (when practical): Reduce packaging waste by buying larger quantities of frequently used
+                    items.</li>
+                <li>Repair and reuse: Give old items a new life by repairing them instead of throwing them away.</li>
+            </ul>
+
+
+
+
+            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+                aria-hidden="true" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url_for('edit_profile', id=user.id) }}"> <label
+                                    for="editFirstname">First Name:</label>
+                                <input type="text" id="editFirstname" name="editFirstname" class="form-control"
+                                    value="{{ user.firstname }}">
+                                <br>
+
+                                <label for="editLastname">Last Name:</label>
+                                <input type="text" id="editLastname" name="editLastname" class="form-control"
+                                    value="{{ user.lastname }}">
+                                <br>
+
+                                <label for="editPhone">Phone number:</label>
+                                <input type="text" id="editPhone" name="editPhone" class="form-control"
+                                    value="{{ user.phone }}">
+                                <br>
+                                <div class="form-group">
+                                    <label for="editWastetype">Waste Type</label>
+                                    <select class="form-control" id="editWasteType" name="editWastetype">
+                                        <option value="Organic" {% if user.wastetype=='Organic' %} selected {%
+                                            endif %}>Organic</option>
+                                        <option value="General" {% if user.wastetype=='General' %} selected {%
+                                            endif %}>General</option>
+                                        <option value="Toxic" {% if user.wastetype=='Toxic' %} selected {% endif
+                                            %}>Toxic</option>
+                                        <option value="Harzadous" {% if user.wastetype=='Harzadous' %} selected
+                                            {% endif %}>General</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<form method="POST">
-    <div>
-        <label for="address">Address</label>
-        <input class="form-control" type="text" name="address" value="{{ user.address }}">
-    </div>
-    <div>
-        <label for="phone">Phone</label>
-        <input class="form-control" type="text" name="phone" value="{{ user.phone }}">
-    </div>
-    <div>
-        <button class="btn btn-primary btn-block" type="submit">Save</button>
-    </div>
-</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var flashMessages = document.querySelectorAll('.flash-messages .flash-message');
+        flashMessages.forEach(function (message) {
+            setTimeout(function () {
+                message.classList.add('fade');
+            }, 3000); // Adjust the delay (in milliseconds) as needed
+        });
+    });
+</script>
 {% endblock %}

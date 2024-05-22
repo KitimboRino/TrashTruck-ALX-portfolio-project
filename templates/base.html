@@ -17,7 +17,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <!-- Add the avatar and user name inside the navbar -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
@@ -34,14 +34,15 @@
             </ul>
         </div>
     </nav>
-    
+
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebar" class="col-md-2 d-md-block sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/home' %}active{% endif %}" href="/profile">
+                            <a class="nav-link {% if request.path == '/profile' %}active{% endif %}"
+                                href="{{ url_for('profile', name=session['name'])}}">
                                 <span data-feather="home"></span>
                                 Account <span class="sr-only">(current)</span>
                             </a>
