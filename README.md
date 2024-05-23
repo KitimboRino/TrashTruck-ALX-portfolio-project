@@ -1,97 +1,157 @@
-Sure, here is a README file for a minimal Flask app that you can add to your GitHub repository:
-
----
-
-# Minimal Flask App
+# TrashTruck UG - Waste Management System
 
 ## Introduction
+Welcome to TrashTruck UG, a user-friendly waste management system designed by a team of passionate ALX-SE students. The system aims at tackling the pressing issue of waste management iespecially in Uganda by providing a digital solution that can be adopted by waste management companies to connect to their clients in an efficient and eco-friendly way. 
 
-This repository contains the code for a minimal Flask application. Flask is a lightweight WSGI web application framework in Python. It's designed with simplicity and flexibility in mind, making it an excellent choice for small to medium-sized applications.
+## Problem
+Imagine a Uganda where waste management is almost no longer a headache by poor waste disposal, where communities are cleaner, and people live healthier lives. Unfortunately, that's not the reality for many Ugandans. Poor waste disposal practices lead to environmental pollution, causing diseases that could be easily avoided. Many waste management companies struggle to reach their clients effectively due to outdated systems and limited digital presence.
 
-## Prerequisites
+## Solution
+TrashTruck UG will bridges the gap between waste management company and the community. With our system, the company can communicate better with its clients, plan and do waste collection efficiently thus contributing to keeping our communities clean and safe. This project is built using the Flask framework owing to its simplicity, flexibility, and scalability.
 
-Before you begin, ensure you have the following installed:
-- Python 3.6 or higher
-- pip (Python package installer)
+## Key Features
 
-## Setting Up the Environment
+**User-Friendly Interface:** Our system provides a seamless experience for both waste management companies and clients.
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/KitimboRino/python-flask-minimal-app.git
-   cd python-flask-minimal-app
-   ```
+**Secure Authentication:** User passwords are hashed for security, ensuring data protection.
 
-2. **Create a Virtual Environment**:
-   It's good practice to create a virtual environment to manage your dependencies.
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
+**Personalized Profiles:** Clients can update their profiles with preferences for waste collection schedules and types.
 
-3. **Install Dependencies**:
-   Install Flask using pip.
-   ```bash
-   pip install -r requirements.txt
-   ```
+**Admin Dashboard:** Admins have access to a comprehensive dashboard for managing users, crews, and client information.
 
-## Running the Application
+**Efficient Crew Management:** Admins can add, edit, and delete waste collection crews with ease.
 
-1. **Run the Flask App**:
-   Make sure your virtual environment is activated, then run:
-   ```bash
-   python app.py
-   ```
+**Interactive Client Management:** Admins can view and manage client details, ensuring smooth operations.
 
-2. **Access the Application**:
-   Open a web browser and go to `http://127.0.0.1:5000`. You should see "Hello, World!" displayed on the page.
+## Getting Started
 
-## File Structure
+To get started with TrashTruck UG, follow these simple steps:
 
-```
-minimal-flask-app/
-├── hello.py
-├── requirements.txt
-├── .flaskenv
-└── README.md
-```
+1. **Clone the Repository:**
 
-- `hello.py`: The main application file.
-- `.flaskenv`: The app configurations.
-- `requirements.txt`: A file listing the dependencies (Flask in this case).
-- `README.md`: This file.
+git clone https://github.com/your-username/trashtruck-ug.git
 
-## Code Explanation
+cd trashtruck-ug
 
-```python
-from flask import Flask
+2. **Set Up Environment:**
 
-app = Flask(__name__)
+python3 -m venv venv
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+source venv/bin/activate
 
-if __name__ == '__main__':
-    app.run(debug=True)
-```
+pip install -r requirements.txt
 
-- **Import Flask**: Imports the Flask class.
-- **Create Flask App**: Creates an instance of the Flask class.
-- **Define Route**: Defines a route for the root URL (`/`) and binds it to the render_template function, which returns index.html page.
-- **Run App**: Starts the Flask development server if the script is run directly.
+3. **Configure Database:**
 
-## Conclusion
+Update the database URI in `config.py` to your preferred database setup.
 
-You have successfully set up and run a minimal Flask application. This basic setup can be expanded with additional routes, templates, and other functionalities as you develop your application further.
+4. **Run the Application:**
 
-## Additional Resources
+python3 app.py
 
-- [Flask Documentation](https://flask.palletsprojects.com/)
-- [Flask Tutorial](https://flask.palletsprojects.com/en/latest/tutorial/)
-- [Python Virtual Environments](https://docs.python.org/3/tutorial/venv.html)
+5. **Access the Application:**
 
----
-AUTHOR: Rino Kitimbo
-AUTHOR: Peter Lubega
-AUTHOR: Andrew Ssentongo
+Open a web browser and go to http://127.0.0.1:5000 to access TrashTruck UG.
+
+Admin credentials:
+email: admin@gmail.com
+password: admin1234
+
+##Project Structure
+
+#@TrashTruck-ALX-portfolio-project/
+#@├── app.py
+#@├── config.py
+#@├── __init__.py
+#@├── models.py
+#@├── README.md
+#@├── requirements.txt
+#@├── app.py
+#@├── static/
+#@│   ├── css/
+#@│   │   ├── dashLayout.css
+#@│   │   └── forms.css
+#@│   └── images/
+#@│       ├── avatar.jpg
+#@│       ├── black.jpeg
+#@│       ├── blue.jpeg
+#@│       ├── green.jpeg
+#@│       ├── login.jpg
+#@│       ├── logo.png
+#@│       └── register.jpg
+#@├── templates/
+#@│   ├── 404.html
+#@│   ├── 500.html
+#@│   ├── base.html
+#@|   ├── clients.html
+#@│   ├── crews.html
+#@│   ├── home.html
+#@│   ├── index.html
+#@│   ├── login.html
+#@│   ├── profile.html
+#@│   └── register.html
+#@└── venv/
+#@    ├── bin/
+#@    │   ├── python -> python3
+#@    │   └── python3 -> /usr/bin/python3
+#@    ├── include/
+#@    ├── lib/
+#@    │   └── python3.8/
+#@    │       └── site-packages/
+#@    ├── lib64 -> lib
+#@    └── pyvenv.cfg
+
+## Routes and Views
+
+- **Landing Page:** `/` - Renders the home page.
+
+- **User Login:** `/login` - Handles user login and authentication.
+
+- **User Registration:** `/register` - Handles user registration and account creation.
+
+- **User Profile:** `/user/<name>` - Displays user profile information and allows editing.
+
+- **Edit Profile:** `/edit_profile/<int:id>` - Handles editing of user profile information.
+
+- **Admin Dashboard:** `/dashboard` - Displays the admin dashboard for managing users and crews.
+- **Clients:** `/clients` - Displays client information and allows admin actions.
+
+- **Crews:** `/crews` - Displays crew information and allows admin actions.
+
+- **Add Crew:** `/add_crew` - Handles adding new crews to the system.
+
+- **Edit Crew:** `/edit_crew/<int:id>` - Handles editing existing crew information.
+
+- **Delete Crew:** `/delete_crew/<int:id>` - Handles deleting crews from the system.
+
+## Example Use Cases
+
+ **User Registration:**
+
+- Sign up as a new user and provide your details (e.g., name, email, password).
+
+- Customize your profile settings, including waste pickup preferences.
+
+ **User Login:**
+
+- Log in with your registered email and password to access your account.
+
+- Explore the dashboard and manage your waste collection preferences.
+
+ **Admin Dashboard:**
+
+- Access the admin dashboard with administrative privileges.
+
+- Manage crews, clients, and view insightful analytics for informed decision-making.
+
+## Contributor Team
+
+TrashTruck UG is by a dedicated team of ALX-SE students:
+
+- Rino Kitimbo kitimborinoemma0580@gmail.com
+
+- Peter Lubega
+
+- Andrew Ssentongo
+--------------------------------------------------------------------------------------------
+Thank you for choosing TrashTruck UG. Together, we can make Uganda cleaner and healthier

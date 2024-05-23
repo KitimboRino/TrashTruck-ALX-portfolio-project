@@ -7,7 +7,11 @@
 {% if messages %}
 <ul class="flash-messages">
     {% for message in messages %}
-    <li class="flash-message">{{ message }}</li>
+    {% if 'success' in message %}
+    <div class="alert alert-success flash-message" role="alert">{{ message }}</div>
+    {% else %}
+    <div class="alert alert-danger flash-message" role="alert">{{ message }}</div>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endif %}
@@ -24,6 +28,8 @@
         color: aliceblue;
     }
 </style>
+<!-- End of Flash Messages Section -->
+<div id="alert-container"></div>
 <div class="container mt-4">
     <h3>Hey Admin, here are your Clients</h3>
     <table class="table table-bordered">

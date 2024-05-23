@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(150), nullable=False)
@@ -52,6 +53,7 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+
 # Crew model
 class Crew(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,9 +68,19 @@ class Crew(db.Model):
         self.pickupdate = pickupdate
         self.location = location
 
-# Create the database tables
+
+# Create the database tables and add admin user
 with app.app_context():
     db.create_all()
+
+    # Add admin user if not exists
+    admin_email = "admin@gmail.com"
+    admin = User.query.filter_by(email=admin_email).first()
+    if not admin:
+        admin_password = "admin1234"  # You should consider a more secure password
+        admin = User(firstname="Admin", lastname="User", email=admin_email, password=admin_password, role='admin')
+        db.session.add(admin)
+        db.session.commit()
 
 
 
@@ -79,15 +91,24 @@ with app.app_context():
 def home():
     return render_template('home.html')
 
+
 # Error handling 404
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
 # Error handling 500
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+
+# Error handling 500
+@app.errorhandler(403)
+def access_denied(e):
+    return render_template('403.html'), 403
+
 
 # Home route
 @app.route('/dashboard')
@@ -95,6 +116,7 @@ def index():
     if 'name' not in session:
         return redirect(url_for('login'))
     return render_template('index.html')
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -111,6 +133,7 @@ def login():
         else:
             flash('Incorrect password or email!', 'danger')
     return render_template('login.html', title='Login')
+
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])
@@ -138,6 +161,7 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html', title='Registration')
 
+
 # Logout route
 @app.route('/logout')
 def logout():
@@ -145,6 +169,7 @@ def logout():
     session.pop('role', None)  # Remove user role from session on logout
     flash('Logged out!', 'success')
     return redirect(url_for('login'))
+
 
 # User route
 @app.route('/user/<name>', methods=['GET', 'POST'])
@@ -175,10 +200,10 @@ def edit_user(id):
         phone = request.form['editPhone']
         location = request.form['editLocation']
         subscription = request.form['editSubscription']
-        
+
         # Find the user in the database by ID
         user = User.query.get(id)
-        
+
         # Update the user information
         user.firstname = firstname
         user.lastname = lastname
@@ -188,13 +213,13 @@ def edit_user(id):
         user.phone = phone
         user.location = location
         user.subscription = subscription
-        
+
         # Commit changes to the database
         db.session.commit()
-        
+
         # Flash a success message
         flash('User information updated successfully!', 'success')
-        
+
         # Redirect to the clients page
         return redirect(url_for('clients'))
 
@@ -203,26 +228,26 @@ def edit_user(id):
 @app.route('/clients')
 def clients():
     # TODO: Implement the sessions for admins only
-    if 'role' not in session or session['role'] != 'user':
+    if 'role' not in session or session['role'] != 'admin':
         flash('Access denied!', 'danger')
-        return redirect(url_for('login'))
-    
+        return redirect(url_for('profile', name=session['name']))
+
     # Fetch all users from the database
     users = User.query.all()
     crews = Crew.query.all()
-    
+
     return render_template('clients.html', title='Clients', users=users, crews=crews)
 
 
 # Crews route
 @app.route('/crews')
 def crews():
-    if 'role' not in session or session['role'] != 'user':
+    if 'role' not in session or session['role'] != 'admin':
         flash('Access denied!', 'danger')
-        return redirect(url_for('login'))
-    
+        return redirect(url_for('profile', name=session['name']))
+
     crews = Crew.query.all()
-    
+
     return render_template('crews.html', title='Crews', crews=crews)
 
 
@@ -233,13 +258,13 @@ def add_crew():
         name = request.form['name']
         pickupdate = request.form['pickupdate']
         location = request.form['location']
-        
+
         new_crew = Crew(name=name, pickupdate=pickupdate, location=location)
         db.session.add(new_crew)
         db.session.commit()
-        
+
         flash('Crew added successfully!', 'success')
-        
+
         return redirect(url_for('crews'))
 
 
@@ -251,14 +276,14 @@ def edit_crew(id):
         crew.name = request.form['editName']
         crew.pickupdate = request.form['editPickupdate']
         crew.location = request.form['editLocation']
-        
+
         db.session.commit()
-        
+
         flash('Crew information updated successfully!', 'success')
-        
+
         return redirect(url_for('crews'))
 
-    
+
 # Delete Crew route
 @app.route('/delete_crew/<int:id>', methods=['POST'])
 def delete_crew(id):
@@ -273,7 +298,7 @@ def delete_crew(id):
     return redirect(url_for('crews'))
 
 
-#edit profile
+# edit profile
 @app.route('/edit_profile/<int:id>', methods=['GET', 'POST'])
 def edit_profile(id):
     if 'name' not in session or session['name'] != User.query.get(id).firstname:
@@ -305,6 +330,7 @@ def edit_profile(id):
         return redirect(url_for('profile', name=user.firstname))  # Redirect to profile
 
     return render_template('edit_profile.html', user=user)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
