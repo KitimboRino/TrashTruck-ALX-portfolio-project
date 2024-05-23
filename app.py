@@ -69,9 +69,19 @@ class Crew(db.Model):
         self.location = location
 
 
-# Create the database tables
+# Create the database tables and add admin user
 with app.app_context():
     db.create_all()
+
+    # Add admin user if not exists
+    admin_email = "admin@gmail.com"
+    admin = User.query.filter_by(email=admin_email).first()
+    if not admin:
+        admin_password = "admin1234"  # You should consider a more secure password
+        admin = User(firstname="Admin", lastname="User", email=admin_email, password=admin_password, role='admin')
+        db.session.add(admin)
+        db.session.commit()
+
 
 
 # Routes and Views
@@ -92,6 +102,12 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+
+# Error handling 500
+@app.errorhandler(403)
+def access_denied(e):
+    return render_template('403.html'), 403
 
 
 # Home route
@@ -212,9 +228,9 @@ def edit_user(id):
 @app.route('/clients')
 def clients():
     # TODO: Implement the sessions for admins only
-    if 'role' not in session or session['role'] != 'user':
+    if 'role' not in session or session['role'] != 'admin':
         flash('Access denied!', 'danger')
-        return redirect(url_for('login'))
+        return redirect(url_for('profile', name=session['name']))
 
     # Fetch all users from the database
     users = User.query.all()
@@ -226,9 +242,9 @@ def clients():
 # Crews route
 @app.route('/crews')
 def crews():
-    if 'role' not in session or session['role'] != 'user':
+    if 'role' not in session or session['role'] != 'admin':
         flash('Access denied!', 'danger')
-        return redirect(url_for('login'))
+        return redirect(url_for('profile', name=session['name']))
 
     crews = Crew.query.all()
 
