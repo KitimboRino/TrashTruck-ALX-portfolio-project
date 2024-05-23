@@ -24,16 +24,16 @@
             <li class="list-group-item">Service Crew: {{ user.crew.name if user.crew else 'None allocated yet' }}</li>
             <li class="list-group-item">Pickupdate: {{ user.pickupdate if user.pickupdate else 'None allocated yet' }}</li>
             <li class="list-group-item">Wastetype: {{ user.wastetype if user.wastetype else 'None allocated yet' }}</li>
-            <h5 class="mt-4">Contact Information</h5>
+            <!-- </ul> -->
+        </div>
+        <div class="col-md-6">
+            <h5 class="mt-5">Contact Information</h5>
             <ul class="list-group">
                 <li class="list-group-item">Email: {{user.email}}</li>
                 <li class="list-group-item">Phone: {{user.phone}}</li>
             </ul>
-            <!-- </ul> -->
-        </div>
-        <div class="col-md-6">
             <!-- Edit button -->
-            <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#editProfileModal">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#editProfileModal">
                 Edit your Profile
             </button>
         </div>
