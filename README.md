@@ -1,13 +1,13 @@
 # TrashTruck UG - Waste Management System
 
 ## Introduction
-Welcome to TrashTruck UG, a user-friendly waste management system designed by a team of passionate ALX-SE students. The system aims at tackling the pressing issue of waste management iespecially in Uganda by providing a digital solution that can be adopted by waste management companies to connect to their clients in an efficient and eco-friendly way. 
+Welcome to TrashTruck UG, a user-friendly waste management system designed by a team of passionate ALX-SE students. The system aims at tackling the pressing issue of waste management especially in Uganda by providing a digital solution that can be adopted by waste management companies to connect to their clients in an efficient and eco-friendly way.
 
 ## Problem
-Imagine a Uganda where waste management is almost no longer a headache by poor waste disposal, where communities are cleaner, and people live healthier lives. Unfortunately, that's not the reality for many Ugandans. Poor waste disposal practices lead to environmental pollution, causing diseases that could be easily avoided. Many waste management companies struggle to reach their clients effectively due to outdated systems and limited digital presence.
+Imagine a Uganda where waste management is almost no longer a headache due to poor waste disposal, where communities are cleaner, and people live healthier lives. Unfortunately, that's not the reality for many Ugandans[1][Poor waste management in Kampala, Uganda]. Poor waste disposal practices lead to environmental pollution[2][implications of poor waste management in Uganda], causing diseases that could be easily avoided. Many waste management companies struggle to reach their clients effectively due to outdated systems and limited digital presence.
 
 ## Solution
-TrashTruck UG will bridges the gap between waste management companies and the community. With our system, companies can communicate better with their clients, plan and do waste collection efficiently thus contributing to keeping our communities clean and safe. This project is built using the Flask framework owing to its simplicity, flexibility, and scalability.
+TrashTruck UG will bridges the gap between waste management company and the community. With our system, the company can communicate better with its clients, plan and do waste collection efficiently thus contributing to keeping our communities clean and safe. This project is built using the Flask framework owing to its simplicity, flexibility, and scalability.
 
 ## Key Features
 
@@ -47,11 +47,15 @@ Update the database URI in `config.py` to your preferred database setup.
 
 4. **Run the Application:**
 
-python3 run.py
+python3 app.py
 
 5. **Access the Application:**
 
 Open a web browser and go to http://127.0.0.1:5000 to access TrashTruck UG.
+
+Admin credentials:
+email: admin@gmail.com
+password: admin1234
 
 ##Project Structure
 
@@ -62,7 +66,7 @@ Open a web browser and go to http://127.0.0.1:5000 to access TrashTruck UG.
 #@├── models.py
 #@├── README.md
 #@├── requirements.txt
-#@├── run.py
+#@├── app.py
 #@├── static/
 #@│   ├── css/
 #@│   │   ├── dashLayout.css
@@ -140,14 +144,20 @@ Open a web browser and go to http://127.0.0.1:5000 to access TrashTruck UG.
 
 - Manage crews, clients, and view insightful analytics for informed decision-making.
 
+## Other resources.
+
+[1]: https://www.monitor.co.ug/uganda/oped/letters/poor-waste-disposal-and-management-is-a-threat-to-health-and-the-environment-4584430
+
+[2]: https://www.monitor.co.ug/uganda/oped/letters/implications-of-poor-waste-management-on-water-quality-and-public-health-4274644
+
 ## Contributor Team
 
 TrashTruck UG is by a dedicated team of ALX-SE students:
 
-- Rino Kitimbo
+- Rino Kitimbo kitimborinoemma0580@gmail.com
 
-- Peter Lubega
+- Peter Lubega peterlubega100@gmail.com
 
-- Andrew Ssentongo
+- Andrew Ssentongo sentosandrewz@gmail.com
 --------------------------------------------------------------------------------------------
 Thank you for choosing TrashTruck UG. Together, we can make Uganda cleaner and healthier

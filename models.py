@@ -2,6 +2,7 @@ from app import db
 from sqlalchemy.orm import mapped_column
 from sqlalchemy import String, Integer
 
+
 class User(db.Model):
     id = mapped_column(Integer, primary_key=True)
     username = mapped_column(String(64), index=True, unique=True)
