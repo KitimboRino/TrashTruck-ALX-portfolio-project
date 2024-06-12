@@ -194,6 +194,9 @@ password: admin1234
 
 
 ## Other resources.
+### **Blog link**
+
+https://medium.com/@peterlubega100/trashtruck-waste-management-system-0dad7fbe2248
 
 [1]: https://www.monitor.co.ug/uganda/oped/letters/poor-waste-disposal-and-management-is-a-threat-to-health-and-the-environment-4584430
 
@@ -201,7 +204,7 @@ password: admin1234
 
 ## Contributor Team
 
-TrashTruck UG is by a dedicated team of ALX-SE students:
+TrashTruck is created by a dedicated team of ALX-SE students:
 
 ### **Rino Kitimbo**
 [rinokitimbo](https://kredinc.vercel.app/)
