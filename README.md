@@ -1,5 +1,21 @@
 # TrashTruck UG - Waste Management System
 
+## Table of content
+
+- [The Story](#the-story)
+- [Getting Started](#getting-started)
+- [Screenshots](#screenshots)
+- [Features](#features)
+    - [Auth](#auth)
+- [Built With](#built-with)
+- [Authors](#authors)
+    - [Rino Kitimbo](#rino-kitimbo)
+    - [Peter Lubega](#Peter-Lubega)
+    - [Andrew Ssentongo](#andrew-ssentongo)
+- [Acknowledgments](#acknowledgements)
+
+## The story
+
 ## Introduction
 Welcome to TrashTruck UG, a user-friendly waste management system designed by a team of passionate ALX-SE students. The system aims at tackling the pressing issue of waste management especially in Uganda by providing a digital solution that can be adopted by waste management companies to connect to their clients in an efficient and eco-friendly way.
 
@@ -9,7 +25,26 @@ Imagine a Uganda where waste management is almost no longer a headache due to po
 ## Solution
 TrashTruck UG will bridges the gap between waste management company and the community. With our system, the company can communicate better with its clients, plan and do waste collection efficiently thus contributing to keeping our communities clean and safe. This project is built using the Flask framework owing to its simplicity, flexibility, and scalability.
 
-## Key Features
+A Kanban board on Trello was utilized throughout in order to keep tasks and communication organized.
+The HTML Ginger front end and the way routing was designed, allowed TrashTruck to have more dynamic features without handcuffing the rest of the project.
+A REST API allowed for this frontend to interact with out backend in a simple and well documented way.
+We decided to use ORM (SQLAlchemy) and PostgreSQL because of modularity and familiarity.
+
+Front End
+* HTML Jinja templating engine
+* Bootstrap for consistent styling
+* API calls to manipulate database
+
+REST API
+* GET, POST, PUT requests handled
+* CRUD manipulation through FLASK REST API
+
+Relational Database
+* Handled with ORM (SQLAlchemy)
+* Model system with base model handling identification
+* Many to many relationship for users and crews
+
+## Features
 
 **User-Friendly Interface:** Our system provides a seamless experience for both waste management companies and clients.
 
@@ -101,6 +136,15 @@ password: admin1234
 #@    ├── lib64 -> lib
 #@    └── pyvenv.cfg
 
+## Built With
+* [Python](http://www.python.org) - The Backend Language
+* [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - The Frontend Language
+* [Flask](http://flask.pocoo.org/docs/1.0/) - The Web Development Framework
+* [SQLAlchemy](https://www.sqlalchemy.org/) - Python SQL Toolkit and Object Relational Mapper
+* [PostGresSQL](https://www.postgresql.org/) - Relational Database Management System
+* [HTML Ginger templating engine](https://hackage.haskell.org/package/ginger-0.10.5.2/docs/Text-Ginger.html) - HTML
+
+
 ## Routes and Views
 
 - **Landing Page:** `/` - Renders the home page.
@@ -138,13 +182,21 @@ password: admin1234
 
 - Explore the dashboard and manage your waste collection preferences.
 
+![Login](./static/images/Log.png)
+
  **Admin Dashboard:**
 
 - Access the admin dashboard with administrative privileges.
 
-- Manage crews, clients, and view insightful analytics for informed decision-making.
+- Manage crews, clients, and informed decision-making.
+
+![Admin](./static/images/Dash.png)
+
 
 ## Other resources.
+### **Blog link**
+
+https://medium.com/@peterlubega100/trashtruck-waste-management-system-0dad7fbe2248
 
 [1]: https://www.monitor.co.ug/uganda/oped/letters/poor-waste-disposal-and-management-is-a-threat-to-health-and-the-environment-4584430
 
@@ -152,12 +204,28 @@ password: admin1234
 
 ## Contributor Team
 
-TrashTruck UG is by a dedicated team of ALX-SE students:
+TrashTruck is created by a dedicated team of ALX-SE students:
 
-- Rino Kitimbo kitimborinoemma0580@gmail.com
+### **Rino Kitimbo**
+[rinokitimbo](https://kredinc.vercel.app/)
 
-- Peter Lubega peterlubega100@gmail.com
+Rino is a frontend software engineer, working on the UI/UX design, frontend, and Application architecture.
 
-- Andrew Ssentongo sentosandrewz@gmail.com
+### **Peter Lubega**
+    
+
+Peter is a full stack software engineer who enjoys both backend work, taking charge of the database and flask portions of TrashTruck while still being heavily involved in the API work as well.
+
+### **Andrew Ssentongo**
+    
+
+Andrew is a backend stack software engineer who loves the backend, taking charge of the flask parts of TrashTruck.
+    
+If you would like to contact [Rino](https://kredinc.vercel.app/) or [Peter] or [Andrew] about any opportunities, feel free to reach out!
+
+
+## Acknowledgements
+* [ALX](https://www.alx.com/) (Staff and Students)
+
 --------------------------------------------------------------------------------------------
-Thank you for choosing TrashTruck UG. Together, we can make Uganda cleaner and healthier
+Thank you for choosing TrashTruck. Together, we can make Uganda cleaner and healthier

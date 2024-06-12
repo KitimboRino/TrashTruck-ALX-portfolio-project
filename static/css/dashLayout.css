@@ -22,13 +22,12 @@
 .nav-link.active,
 .nav-link:hover {
     color: white;
-
     /* Set the text color to white for active and hover states */
 }
 
 .nav-link.active {
     background-color: green;
-    /* Set the background color to red for active state */
+    /* Set the background color to green for active state */
 }
 
 .avatar-img {

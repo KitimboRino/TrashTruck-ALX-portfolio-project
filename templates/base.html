@@ -49,6 +49,7 @@
                                 Account
                             </a>                                                       
                         </li>
+                        {% if session['role'] == 'admin' %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/clients' %}active{% endif %}" href="/clients">
                                 <span data-feather="users"></span>
@@ -64,6 +65,7 @@
                                 <i class="fas fa-users"></i>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
